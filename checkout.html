@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Camp Registration Payment</title>
+  <script src="checkout.js" defer></script>
+</head>
+<body>
+  <form id="payment-form">
+    <label for="num-kids">Number of Children (1–5):</label>
+    <input type="number" id="num-kids" name="num-kids" min="1" max="5" required><br><br>
+
+    <label for="payment-type">Payment Type:</label>
+    <select id="payment-type" name="payment-type" required>
+      <option value="full">Full Payment</option>
+      <option value="biweekly">Biweekly (3 payments)</option>
+    </select><br><br>
+
+    <button type="submit">Proceed to Payment</button>
+  </form>
+</body>
+</html>
