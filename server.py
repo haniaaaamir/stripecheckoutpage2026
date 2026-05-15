@@ -83,7 +83,8 @@ def redirect_to_checkout():
 
         for i in range(1, MAX_KIDS + 1):
             age_value = request.args.get(f'age{i}')
-            if age_value:
+            # Skip empty values (None or empty string)
+            if age_value and age_value.strip():
                 ages.append(int(age_value))
 
         total_price = calculate_total_price(ages)
@@ -150,17 +151,20 @@ def jotform_hook():
 
         for i in range(1, MAX_KIDS + 1):
             age_value = data.get(f'age{i}', '').strip()
+            
+            # Skip empty values
+            if not age_value:
+                continue
+                
+            if not age_value.isdigit():
+                raise ValueError(f"age{i} must be a number")
 
-            if age_value:
-                if not age_value.isdigit():
-                    raise ValueError(f"age{i} must be a number")
+            age = int(age_value)
 
-                age = int(age_value)
+            if age < 7 or age > 18:
+                raise ValueError(f"age{i} must be between 7 and 18")
 
-                if age < 7 or age > 18:
-                    raise ValueError(f"age{i} must be between 7 and 18")
-
-                ages.append(age)
+            ages.append(age)
 
         if len(ages) == 0:
             raise ValueError("At least one kid is required")
